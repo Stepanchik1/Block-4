@@ -12,23 +12,22 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
-    User user = new User("User");
-
     @Mock
-    private final UserService out = new UserService();
+    private UserDAO userDAO;
+
+    @InjectMocks
+    private UserService userService;
 
     @Test
     public void ShouldReturnSuccessMessageIfUserDAOContainsUser() {
-        UserDAO.addUser(user);
-        when(out.checkUser(user)).thenReturn(true);
-        System.out.println(out.checkUser(user));
+        when(userService.checkUser(userDAO, userDAO.user)).thenReturn(true);
+        System.out.println(userService.checkUser(userDAO, userDAO.user));
     }
 
     @Test
     public void ShouldReturnSuccessMessageIfUserDAODoNotContainsInvalidUser() {
-        UserDAO.addUser(user);
         User user2 = new User("Not valid User");
-        when(out.checkUser(user2)).thenReturn(false);
-        System.out.println(out.checkUser(user2));
+        when(userService.checkUser(userDAO, user2)).thenReturn(false);
+        System.out.println(userService.checkUser(userDAO, user2));
     }
 }
