@@ -12,11 +12,15 @@ public class UserDAOTest {
 
     @Test
     public void ShouldReturnSuccessMessageIfUserIsFindByName() {
-        Assertions.assertEquals(userDAO.findUser("   user    "), userDAO.user);
+        User user = new User("User");
+        userDAO.userList().add(user);
+        Assertions.assertEquals(userDAO.findUser("   user    "), user);
     }
 
     @Test
     public void ShouldReturnSuccessMessageIfNullIsFindByInvalidName() {
+        User user = new User("User");
+        userDAO.userList().add(user);
         Assertions.assertNull(userDAO.findUser("   non-user    "));
     }
 }

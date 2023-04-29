@@ -11,8 +11,10 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public boolean checkUser (UserDAO userDAO, User user) {
-        if (userDAO.userList()==null) {return false;}
+    public boolean checkUser(User user) {
+        if (userDAO.userList() == null) {
+            return false;
+        }
         return userDAO.userList().contains(user);
     }
 }

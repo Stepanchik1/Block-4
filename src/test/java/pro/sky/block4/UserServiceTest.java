@@ -1,11 +1,14 @@
 package pro.sky.block4;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.HashSet;
 
 import static org.mockito.Mockito.when;
 
@@ -20,14 +23,22 @@ public class UserServiceTest {
 
     @Test
     public void ShouldReturnSuccessMessageIfUserDAOContainsUser() {
-        when(userService.checkUser(userDAO, userDAO.user)).thenReturn(true);
-        System.out.println(userService.checkUser(userDAO, userDAO.user));
+        User user = new User("User");
+        HashSet<User> hashSet = new HashSet();
+        hashSet.add(user);
+        when(userDAO.userList()).thenReturn(hashSet);
+        System.out.println(userService.checkUser(user));
+        Assertions.assertTrue(userService.checkUser(user));
     }
 
     @Test
     public void ShouldReturnSuccessMessageIfUserDAODoNotContainsInvalidUser() {
+        User user = new User("User");
         User user2 = new User("Not valid User");
-        when(userService.checkUser(userDAO, user2)).thenReturn(false);
-        System.out.println(userService.checkUser(userDAO, user2));
+        HashSet<User> hashSet = new HashSet();
+        hashSet.add(user);
+        when(userDAO.userList()).thenReturn(hashSet);
+        System.out.println(userService.checkUser(user2));
+        Assertions.assertFalse(userService.checkUser(user2));
     }
 }
